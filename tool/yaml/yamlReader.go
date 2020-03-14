@@ -1,19 +1,34 @@
 package yamlReader
 
 import (
-	"codezexcel/CodeZExcelTool/tool/yaml/model"
 	"io/ioutil"
 	"log"
 	"gopkg.in/yaml.v2"
 	"path/filepath"
 )
 
+const (
+	YAMLDEFAULTPATH = "./tool/yaml/config.yaml"
+)
+
+type YamlConfigure struct {
+	Version string `yaml:"version"`
+	Xlsx XlsxConfig `yaml:"xlsx"`
+}
+
+type XlsxConfig struct {
+	AbsolutePath string `yaml:"absolutepath"`
+	MatchFilePath string `yaml:"absoluteMatchPath"`
+	SavedDirctory string `yaml:"saveddirctory"`
+	DownloadFile string `yaml:"virtualDownloadPath"`
+}
+
 type YamlReader struct {
-	Configure yamlConfig.YamlConfigure
+	Configure YamlConfigure
 }
 
 func Instance() (*YamlReader, error) {
-	var filePath, err = filepath.Abs(yamlConfig.YAMLDEFAULTPATH)
+	var filePath, err = filepath.Abs(YAMLDEFAULTPATH)
 	if err != nil {
 		return nil, err
 	}
@@ -22,16 +37,16 @@ func Instance() (*YamlReader, error) {
 	yr := new(YamlReader)
 	yamlFile, err := ioutil.ReadFile(filePath)
 	if err != nil {
-		log.Panicf("yaml文件[%v]获取错误：%v\n", filePath, err.Error())
+		log.Printf("yaml文件[%v]获取错误：%v\n", filePath, err.Error())
 		return nil, err
 	}
 
-	tagConfigure := new(yamlConfig.YamlConfigure)
+	tagConfigure := new(YamlConfigure)
 
 	err = yaml.Unmarshal(yamlFile, tagConfigure)
 
 	if err != nil {
-		log.Panicf("读取数据错误[%v]", err)
+		log.Printf("读取数据错误[%v]", err)
 		return nil, err
 	}
 
