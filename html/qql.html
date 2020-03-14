@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>lab实验室</title>
+	<link rel="stylesheet" type="text/css" href="/html/asset/css/adminlte.min.css">
+	<link rel="stylesheet" type="text/css" href="/html/asset/plugins/fontawesome-free/css/all.min.css">
+</head>
+<body class="layout-fixed layout-top-nav">
+
+
+	<form role="form">
+        <div class="card-body">
+			<div class="form-group">
+				<label for="exampleInputFile">csv文件</label>
+				<div class="input-group">
+				  <div class="custom-file">
+				    <input type="file" class="custom-file-input" id="qql-csv-file">
+				    <label class="custom-file-label" for="qql-csv-file" id="csv-file-name">选择你的csv文件</label>
+				  </div>
+				  <!-- <div class="input-group-append">
+				    <span class="input-group-text" id="csv-upload">上传</span>
+				  </div>
+ -->				</div>
+			</div>
+
+          <div class="form-group">
+            <label for="exampleInputEmail1">文件名</label>
+            <input type="text" class="form-control" id="xlsx-input-file" placeholder="请输入文件名" disabled="disabled">
+          </div>
+
+        <div class="card-footer">
+          <button type="button" class="btn btn-primary disabled" id = 'upload-file'>确认</button>
+          <button type="button" class="btn btn-default" id = 'clear-file'>清空服务器文件</button>
+        </div>
+        <div class="card-footer" id = "download-card" hidden="true">
+        	<a href="#" id="xlsx-download" target="_blank"></a>
+			<button id="download" class="btn btn-success" type="button">
+			<i class="glyphicon glyphicon-download-alt"></i>下载</button>
+        </div>
+      </form>
+
+	<script type="text/javascript" src="/html/asset/plugins/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/html/asset/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/html/asset/js/adminlte.js"></script>
+	<!-- <script type="text/javascript" src="/html/asset/js/lab.configure.js"></script> -->
+	<script type="text/javascript" src="/html/asset/js/qql.excel.js"></script>
+
+</body>
+</html>
