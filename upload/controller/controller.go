@@ -378,7 +378,7 @@ func CreateNewShippingOrder(data *CSVFile) (string, error) {
 		return "", err
 	}
 
-	newFileName := tool.AppendFileSuffix(data.fileName, "xlsx")
+	newFileName := tool.AppendFileSuffix(data.fileName, string(LabFileTypeXlsx))
 
 	newFilePath := reader.Configure.Xlsx.SavedDirctory + newFileName
 
@@ -391,7 +391,7 @@ func CreateNewShippingOrder(data *CSVFile) (string, error) {
 		return "", errors.New("创建文件" + newAbsoulteFilePath + "失败:" + err.Error())
 	}
 
-	newFileName = tool.AppendFileSuffix(tool.GetFileName(newAbsoulteFilePath), "xlsx")
+	newFileName = tool.AppendFileSuffix(tool.GetFileName(newAbsoulteFilePath), string(LabFileTypeXlsx))
 
 	return reader.Configure.Xlsx.DownloadFile + "/" + newFileName, nil
 }

@@ -14,7 +14,7 @@ const (
 type YamlConfigure struct {
 	Version string `yaml:"version"`
 	Xlsx XlsxConfig `yaml:"xlsx"`
-	Port int `yaml:"port"`
+	Port string `yaml:"port"`
 }
 
 type XlsxConfig struct {
