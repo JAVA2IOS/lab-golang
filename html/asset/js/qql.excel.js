@@ -17,6 +17,7 @@ $('#qql-csv-file').bind("change", function(e) {
 		$('#download-card').attr('hidden', true)
 		$('#xlsx-download').attr('href', "#");
 		var file = files[0]
+		console.info(file.type)
 		if (file.type != 'text/csv') {
 			alert('请上传csv格式文件')
 			var inputFile = document.getElementById('qql-csv-file');

@@ -95,7 +95,7 @@ func saveFileToLocalPath(fileName string, file multipart.File, header *multipart
     absoultePath = tool.NewFilePath(absoultePath)
     log.Printf("csv文件地址: %v \n", absoultePath)
 
-    f, err := os.OpenFile(absoultePath, os.O_WRONLY | os.O_CREATE, 0666)
+    f, err := os.OpenFile(absoultePath, os.O_WRONLY | os.O_TRUNC | os.O_CREATE, 0666)
 
     if err != nil {
         log.Printf("file open failed : %v \n", err.Error())
@@ -120,9 +120,9 @@ func ReadCSVFile(filePath string, fileName string) (*CSVFile, error) {
 		return nil, err
 	}
 
-	decoder := mahonia.NewDecoder("gbk")
-
-	reader := csv.NewReader(decoder.NewReader(file))
+	// decoder := mahonia.NewDecoder("gbk")
+	// reader := csv.NewReader(decoder.NewReader(file))
+	reader := csv.NewReader(file)
 	if reader == nil {
 		log.Printf("初始化读取失败\n")
 		return nil, errors.New("文件初始化失败")
@@ -238,6 +238,7 @@ func CreateNewShippingOrder(data *CSVFile) (string, error) {
 	}
 
 	for _, row := range data.data {
+		log.Printf("当前内容: %v", row.cells)
 		/*
 		AN 商家备注 过滤掉"快速发货"
 		AO 售后状态 保留 "无售后或售后取消"
@@ -357,7 +358,7 @@ func CreateNewShippingOrder(data *CSVFile) (string, error) {
 				numberCell.SetStyle(xlsx.NewStyle())
 
 				goodsNameCell := newRow.AddCell()
-				goodsNameCell.SetValue(WordValve)
+				goodsNameCell.SetValue(WordValve + row.cells[11].value + "个")
 				goodsNameCell.SetStyle(xlsx.NewStyle())
 
 				expressCell := newRow.AddCell()

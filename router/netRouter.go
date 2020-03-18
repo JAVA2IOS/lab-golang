@@ -46,7 +46,7 @@ func NetResponseHandler() {
 
 	http.HandleFunc("/", netRouterConfigureCenter)
 
-	err := http.ListenAndServe(":8081", nil) //设置监听的端口
+	err := http.ListenAndServe(":" + reader.Configure.Port, nil) //设置监听的端口
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err, "code: ", err.Error())
 	}
