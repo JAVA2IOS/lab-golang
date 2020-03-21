@@ -23,6 +23,8 @@ func netRouterConfigureCenter(w http.ResponseWriter, r *http.Request) {
 		qql.QqlCreateShippingOrder(w, r)
 	case "/qql/tool/excel/clearfiles":
 		qql.QqlClearXlsxFiles(w, r)
+	case "/qql/tool/excel/xlsxlist":
+		qql.QqlXlsxFileList(w, r)
 	default:
 		log.Printf("当前路径失败: %v", r.URL.Path)
 		tpl, gloableErr := template.ParseFiles("html/404.html")

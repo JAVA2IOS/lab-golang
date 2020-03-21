@@ -18,7 +18,7 @@ const (
 
 type JsonHandler struct {
 	Success bool `json:"success"`
-	Data string `json:"data"`
+	Data interface{} `json:"data"`
 	Code int `json:"code"`
 	Message string `json:"message"`
 }
@@ -36,7 +36,7 @@ func HandlerAsyncHttpError(w http.ResponseWriter, err chan error) {
 	}
 }
 
-func HandlerHttpJson(w http.ResponseWriter, data string) {
+func HandlerHttpJson(w http.ResponseWriter, data interface{}) {
 	handler := JsonHandler{Success:true, Code: http.StatusOK, Data: data}
 	jsonString, _ := json.Marshal(handler)
 	log.Printf("成功: %v \n", string(jsonString))

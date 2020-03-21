@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"log"
 	file "lab-golang/file/controller"
+	"lab-golang/excel/qql/model"
 )
 
 func QqlCreateShippingOrder(w http.ResponseWriter, r *http.Request) {
@@ -63,3 +64,35 @@ func QqlClearXlsxFiles(w http.ResponseWriter, r *http.Request) {
 
 	config.HandlerHttpJson(w, "清除文件成功")
 }
+
+func QqlXlsxFileList(w http.ResponseWriter, r *http.Request) {
+	path, err := filepath.Abs("file/xlsx")
+	if err != nil {
+		config.HandlerHttpError(w, err)
+		return 
+	}
+	log.Printf("地址: %v", path)
+
+	lists := file.ReadFileList(path)
+
+	if len(lists) == 0 {
+		config.HandlerHttpJson(w, nil)
+		return 
+	}
+
+	xlsxFile := make([]*model.XlsxFile, 0)
+	for _, v := range lists {
+		file := &model.XlsxFile{Name: v.Name(), Size: v.Size(), CreateTime: v.ModTime().Unix()}
+		xlsxFile = append(xlsxFile, file)
+	}
+
+	config.HandlerHttpJson(w, xlsxFile)
+}
+
+
+
+
+
+
+
+

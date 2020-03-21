@@ -1,10 +1,66 @@
 function getFileName(filePath) {
 	var pattern = /\.{1}[a-z]{1,}$/;
-    if (pattern.exec(filePath) !== null) {
-        return (filePath.slice(0, pattern.exec(filePath).index));
-    } else {
-        return filePath;
-    }
+	if (pattern.exec(filePath) !== null) {
+		return (filePath.slice(0, pattern.exec(filePath).index));
+	} else {
+		return filePath;
+	}
+}
+
+function getQqlXlsxFileList() {
+	$.ajax({
+		url: '/qql/tool/excel/xlsxlist',
+		type: 'GET',
+		success: function (s) {
+			var obj = JSON.parse(s)
+			// $('#download-card').attr('hidden', !obj.success)
+			if (!obj.success) {
+				alert(obj.message)
+				return;
+			}
+			console.info(obj.data)
+			ShowXlsxFileList(obj.data)
+		}
+	})
+}
+
+function ShowXlsxFileList(data) {
+	$('#table-xlsx-list-tbody').empty()
+	// 是否隐藏
+	if (data == 'undefined' || data == null) {
+		$('#xlsx-table').attr('hidden', true)
+		return
+	}
+
+	for (var i = 0; i < data.length; i++) {
+		var file = data[i]
+		var size = file.size
+		var sizeUnit = " KB"
+		size = size / 1024
+		if (size >= 1024) {
+			size = size / 1024
+			sizeUnit = " M"
+		}
+		var obj = "<tr><td>" + file.name + 
+		"</td><td>" + size + sizeUnit +
+		"</td><td><span data-toggle=\"tooltip\" title=\"无效\" class=\"badge bg-success\">存在</span></td>" +
+		" <td class=\"text-right py-0 align-middle\">" + 
+		"<div class=\"btn-group btn-group-sm\">" + 
+		// "<a href=\"javascript:;\" class=\"btn btn-success\" ><i class=\"fas fa-download\" onClick = qqlXlsxFileDownload() data-toggle=\"tooltip\" title=\"下载\"></i></a>" + 
+		// "<a href=\"javascript:;\" onClick = qqlXlsxFileDelete() class=\"btn btn-danger\"><i class=\"fas fa-trash\" data-toggle=\"tooltip\" title=\"删除\"></i></a>" + 
+		"</div></td></tr>"
+		$('#table-xlsx-list-tbody').append(obj)
+	}
+
+	$('#xlsx-table').attr('hidden', data.length == 0)
+}
+
+function qqlXlsxFileDownload() {
+	console.info($(this).parents())
+}
+
+function qqlXlsxFileDelete() {
+	console.info($(this))
 }
 
 function uploadButtonEnabled(enabled) {
@@ -95,13 +151,15 @@ $("#upload-file").click(function(){
 			}
 			var href = obj.data
 			$('#xlsx-download').attr('href', href);
+
+			getQqlXlsxFileList()
 		}
 	})
 });
 
 $("#download").click(function(){
 	var link = document.getElementById('xlsx-download')
-    link.click(); 
+	link.click(); 
 });
 
 $("#clear-file").click(function(){
@@ -113,9 +171,17 @@ $("#clear-file").click(function(){
 			$('#download-card').attr('hidden', true)
 			if (obj.success) {
 				alert('清除成功');
+				getQqlXlsxFileList()
 			}else {
 				alert('文件清除失败:' + obj.message);
 			}
 		}
 	})
 });
+
+$(function(){
+	$('#file-list').load('/html/normalTable.html');
+	// getXlsxFileList()
+	getQqlXlsxFileList()
+})
+

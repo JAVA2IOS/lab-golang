@@ -17,3 +17,8 @@ $('#my-todo-list').TodoList({
     // Do something after the checkbox has been unchecked
   }
 })
+
+
+$(function(){
+	$('#content-frame').load('/html/qql.html');
+})

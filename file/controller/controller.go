@@ -16,6 +16,7 @@ func ClearFile(filePath string) error {
 	dir_list, e := ioutil.ReadDir(filePath)
     if e != nil {
     	log.Printf("文件路径错误: %v", filePath)
+    	return e
     }
 
     for _, v := range dir_list {
@@ -28,4 +29,14 @@ func ClearFile(filePath string) error {
     }
 
     return nil
+}
+
+func ReadFileList(filePath string) []os.FileInfo {
+	dir_list, e := ioutil.ReadDir(filePath)
+    if e != nil {
+    	log.Printf("文件路径错误: %v", filePath)
+    	return nil
+    }
+
+    return dir_list
 }
