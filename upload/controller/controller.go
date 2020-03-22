@@ -97,9 +97,9 @@ func saveFileToLocalPath(fileName string, file multipart.File, header *multipart
 
     f, err := os.OpenFile(absoultePath, os.O_WRONLY | os.O_TRUNC | os.O_CREATE, 0666)
 
-    if err != nil {
+    if f == nil && err != nil{
         log.Printf("file open failed : %v \n", err.Error())
-        return "", errors.New("文件创建失败: " + err.Error())
+        return "", errors.New("文件打开失败: " + err.Error())
     }
     defer f.Close()
 
