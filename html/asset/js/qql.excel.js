@@ -74,13 +74,14 @@ $('#qql-csv-file').bind("change", function(e) {
 		$('#xlsx-download').attr('href', "#");
 		var file = files[0]
 		console.info(file.type)
-		if (file.type != 'text/csv') {
-			alert('请上传csv格式文件')
-			var inputFile = document.getElementById('qql-csv-file');
-			inputFile.value = "";
-			uploadButtonEnabled(false)
-			return
-		}
+		
+		// if (file.type != 'text/csv') {
+		// 	alert('请上传csv格式文件')
+		// 	var inputFile = document.getElementById('qql-csv-file');
+		// 	inputFile.value = "";
+		// 	uploadButtonEnabled(false)
+		// 	return
+		// }
 
 		if (file.size <= 0) {
 			alert('文件内容为空，请选择其他文件')
